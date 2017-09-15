@@ -1,0 +1,187 @@
+# Copyright xiaoping378. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2.2'
+
+networks:
+  ethdev:
+
+services:
+  bootnode:
+    container_name: bootnode
+    hostname: bootnode
+    image: xiaoping378/ethereum:1.6
+    volumes:
+      - /home
+      - /etc/localtime:/etc/localtime:ro
+    command: sh -c "bootnode -genkey=/home/boot.key && bootnode --nodekey=/home/boot.key"
+    restart: always
+    networks:
+      - ethdev
+
+  node0:
+    container_name: node0
+    hostname: node0
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - ACCOUNT=16d071a5374281dd27f2c946c08bd01283ec86eb
+      - RPC=true
+      - SINGER=true
+      - RPCAPI="eth,net,web3,admin,personal"
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node0:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    ports:
+      - "8545:8545"
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
+
+  node1:
+    container_name: node1
+    hostname: node1
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - ACCOUNT=8220f95f8db7bacf4313c2906f2800e537715192
+      - RPC=true
+      - SINGER=true
+      - RPCAPI="eth,net,web3,admin,personal"
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node1:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    ports:
+      - "8546:8545"
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
+
+  node2:
+    container_name: node2
+    hostname: node2
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - ACCOUNT=bc43dec69f2198fc6b08502e2d7da2efba38c8ed
+      - RPC=true
+      - SINGER=true
+      - RPCAPI="eth,net,web3,admin,personal"
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node2:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    ports:
+      - "8547:8545"
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
+
+  node3:
+    container_name: node3
+    hostname: node4
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node3:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
+
+  node4:
+    container_name: node4
+    hostname: node4
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node4:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
+
+  node5:
+    container_name: node5
+    hostname: node5
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node5:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
+
+  node6:
+    container_name: node6
+    hostname: node6
+    image: xiaoping378/ethereum:1.6
+    environment:
+      - NETWORKID=378
+      - LOGGING_LEVEL=3
+    volumes:
+      - ./node6:/root/.ethereum
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - ./run.sh:/run.sh
+    volumes_from:
+      - bootnode
+    command: sh run.sh
+    restart: always
+    depends_on:
+      - bootnode
+    networks:
+      - ethdev
