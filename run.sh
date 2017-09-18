@@ -1,12 +1,14 @@
-#!/bin bash
+#!/bin/sh
 set -e
 set -x
 
 [ ! -d /root/.ethereum/geth/chaindata ] && geth init /config/genesis.json
-[ $RPC ] && RPCOPT="--rpc --rpccorsdomain \"*\" --rpcapi $RPCAPI"
 
-[ $SINGER ] && MINE="--mine"
-[ $SINGER ] && ETHERBASE_UNLOCK_PASSWORD="--etherbase $ACCOUNT --unlock $ACCOUNT --password /config/password"
+[ $RPC ] && RPCOPT="--rpc --rpcaddr 0.0.0.0 --rpcport 8545 --rpcapi eth,net,web3,admin,personal"
+
+[ $WS ] && WSOPT="--ws --wsaddr 0.0.0.0"
+
+[ $SINGER ] && MINE="--mine --etherbase $ACCOUNT --unlock $ACCOUNT --password /config/password"
 
 [ $NETWORKID ] && NETWORK="--networkid $NETWORKID"
 
@@ -18,9 +20,9 @@ KEYSTORE=/root/.ethereum/keystore
 cp /config/keystore/* $KEYSTORE
 
 geth \
+    $RPCOPT  --rpccorsdomain "*" \
+    $WSOPT \
     $MINE \
-    $RPCOPT \
-    $ETHERBASE_UNLOCK_PASSWORD \
     $NETWORK \
     $BOOTNODE \
-    --verbosity $LOGGING_LEVEL \
+    --verbosity $LOGGING_LEVEL

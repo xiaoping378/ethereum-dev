@@ -28,8 +28,8 @@ services:
     environment:
       - ACCOUNT=16d071a5374281dd27f2c946c08bd01283ec86eb
       - RPC=true
+      - WS=true
       - SINGER=true
-      - RPCAPI="eth,net,web3,admin,personal"
       - NETWORKID=378
       - LOGGING_LEVEL=3
     volumes:
@@ -43,6 +43,7 @@ services:
     restart: always
     ports:
       - "8545:8545"
+      - "8546:8546"
     depends_on:
       - bootnode
     networks:
@@ -55,8 +56,8 @@ services:
     environment:
       - ACCOUNT=8220f95f8db7bacf4313c2906f2800e537715192
       - RPC=true
+      - WS=true
       - SINGER=true
-      - RPCAPI="eth,net,web3,admin,personal"
       - NETWORKID=378
       - LOGGING_LEVEL=3
     volumes:
@@ -69,7 +70,8 @@ services:
     command: sh run.sh
     restart: always
     ports:
-      - "8546:8545"
+      - "8547:8545"
+      - "8648:8546"
     depends_on:
       - bootnode
     networks:
@@ -82,8 +84,8 @@ services:
     environment:
       - ACCOUNT=bc43dec69f2198fc6b08502e2d7da2efba38c8ed
       - RPC=true
+      - WS=true
       - SINGER=true
-      - RPCAPI="eth,net,web3,admin,personal"
       - NETWORKID=378
       - LOGGING_LEVEL=3
     volumes:
@@ -96,7 +98,8 @@ services:
     command: sh run.sh
     restart: always
     ports:
-      - "8547:8545"
+      - "8549:8545"
+      - "8550:8546"
     depends_on:
       - bootnode
     networks:
